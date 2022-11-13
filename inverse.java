@@ -10,49 +10,43 @@ public class inverse {
                         {1,4,7},
                         {9,2,5}};
 
-        double[][] inv = Inverse(x);
-
+        double[][] inv = INVERSE(x);
         PRINT(MultiplyMatrix(x, inv));
     }
 
-    public static double[][] Inverse(double[][] K){
-        double[][] Z = Transfer(K);
-        int m = Z.length, n = Z[0].length;
-        double[][] I = new double[m][n];
+    public static double[][] INVERSE(double[][] z){
+        double[][] X = Transfer(z);
+        double[][] I = new double[X.length][X[0].length];
         double A, B, C, D;
-
-        for(int i = 0; i < m; i++){
+        for(int i = 0; i < X.length; i++){
             I[i][i] = 1.0;
         }
-
-        for(int i = 1; i < m; i++){
+        for(int i = 1; i < X.length; i++){
             for(int j = 0; j < i; j++){
-                A = Z[i][j];
-                B = Z[j][j];
-                for(int k = 0; k < n; k++){
-                    Z[i][k] -= (A/B)*Z[j][k];
-                    I[i][k] -= (A/B)*I[j][k];
+                A = X[i][j];
+                B = X[j][j];
+                for(int k = 0; k < X.length; k++){
+                    X[i][k] = X[i][k] - (A/B)*X[j][k];
+                    I[i][k] = I[i][k] - (A/B)*I[j][k];
                 }
             }
         }
-
-        for(int i = 1; i < m; i++){
+        for(int i = 1; i < X.length; i++){
             for(int j = 0; j < i; j++){
-                C = Z[j][i];
-                D = Z[i][i];
-                for(int k = 0; k < n; k++){
-                    Z[j][k] -= (C/D)*Z[i][k];
-                    I[j][k] -= (C/D)*I[i][k];
+                C = X[j][i];
+                D = X[i][i];
+                
+                for(int k = 0; k < X.length; k++){
+                    X[j][k] = X[j][k] - (C/D)*X[i][k];
+                    I[j][k] = I[j][k] - (C/D)*I[i][k];
                 }
             }
         }
-
-        for(int i = 0; i < m; i++){
-            for(int j = 0; j < n; j++){
-                I[i][j] /= Z[i][i];
+        for(int i = 0; i < X.length; i++){
+            for(int j = 0; j < X[0].length; j++){
+                I[i][j] = I[i][j] / X[i][i];
             }
         }
-
         return I;
     }
 
